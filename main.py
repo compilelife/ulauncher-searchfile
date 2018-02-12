@@ -8,6 +8,8 @@ from ulauncher.api.shared.action.CopyToClipboardAction import CopyToClipboardAct
 from ulauncher.api.shared.action.SetUserQueryAction import SetUserQueryAction
 from ulauncher.api.shared.event import PreferencesEvent
 from ulauncher.api.shared.event import PreferencesUpdateEvent
+from ulauncher.api.shared.event import ItemEnterEvent
+from ulauncher.api.shared.action.ExtensionCustomAction import ExtensionCustomAction
 from locator import Locator
 
 
@@ -19,6 +21,7 @@ class SearchFileExtension(Extension):
         self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
         self.subscribe(PreferencesEvent, PreferencesEventListener())
         self.subscribe(PreferencesUpdateEvent, PreferencesUpdateEventListener())
+        self.subscribe(ItemEnterEvent, ItemEnterEventListener())
 
 
 class PreferencesUpdateEventListener(EventListener):
@@ -32,27 +35,46 @@ class PreferencesEventListener(EventListener):
         locator.set_limit(event.preferences['limit'])
 
 
+class ItemEnterEventListener(EventListener):
+    def on_event(self, event, extension):
+        results = event.get_data()
+        items = []
+        for file in results:
+            items.append(ExtensionSmallResultItem(icon='images/copy.png',
+                name = file,
+                on_enter = CopyToClipboardAction(file)))
+        return RenderResultListAction(items)
+
+
 class KeywordQueryEventListener(EventListener):
+    def __help(self):
+        examples = ['s 2018', 's r -r']
+        desc = ['search file or directory 2018', 'search use regex']
+        items = []
+        for i in range(len(examples)):
+            items.append(ExtensionSmallResultItem(icon='images/info.png',
+                                                  name=examples[i] +
+                                                  ' : '+desc[i],
+                                                  on_enter=SetUserQueryAction(
+                                                      examples[i])
+                                                  ))
+        return items
+                
     def on_event(self, event, extension):
         arg = event.get_argument()
         items = []
 
         if arg is None:
-            examples=['s 2018', 's r -r']
-            desc = ['search file or directory 2018', 'search use regex']
-            for i in range(len(examples)):
-                items.append(ExtensionSmallResultItem(icon='images/info.png',
-                name = examples[i]+' : '+desc[i],
-                on_enter = SetUserQueryAction(examples[i])
-                ))
+            items = self.__help()
         else:
             try:
                 results = locator.run(arg)
+                alt_action = ExtensionCustomAction(results, True)
                 for file in results:
                     items.append(ExtensionSmallResultItem(icon='images/ok.png',
                         name = file, 
                         on_enter = OpenAction(file),
-                        on_alt_enter = CopyToClipboardAction(file)))
+                        on_alt_enter = alt_action))
             except Exception, e:
                 error_info = str(e)
                 items = [ExtensionSmallResultItem(icon='images/error.png',
