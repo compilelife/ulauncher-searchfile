@@ -10,7 +10,7 @@ Currently it has two modes.
 
 ![basename search](images/1.png)
 
-2. Raw mode, which pass all argument directly into `locate`. The flowing screenshot demonstrates how to use regex to match files with subfix `png` in `searchfile` direcory:
+2. Raw mode, which pass all argument directly into `locate`. The flowing screenshot demonstrates how to use regex to match files with subfix `png` in `searchfile` direcory(first <u>r</u> is use to trigger <u>r</u>aw mode):
 
 ![regex search](images/2.png)
 
