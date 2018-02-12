@@ -1,0 +1,27 @@
+{
+    "manifest_version": "2",
+    "api_version": "1",
+    "name": "search files",
+    "description": "search files using locate",
+    "developer_name": "compilelife",
+    "icon": "images/icon.png",
+    "options": {
+      "query_debounce": 1.0
+    },
+    "preferences": [
+      {
+        "id": "keyword",
+        "type": "keyword",
+        "name": "search files",
+        "description": "keyword to activate this plugin",
+        "default_value": "s"
+      },
+      {
+        "id": "limit",
+        "type": "input",
+        "name": "maximum number of result",
+        "description": "result will be truncate to the maximum number",
+        "default_value": "8"
+      }
+    ]
+  }
