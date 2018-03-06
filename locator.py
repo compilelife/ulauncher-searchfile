@@ -19,16 +19,16 @@ class Locator:
         except:
             return False
 
-    def run(self, patten):
+    def run(self, pattern):
         if self.cmd == None:
             raise RuntimeError('command locate not found or options config error')
         else:
             cmd = [self.cmd, '-l', str(self.limit)]
-            args = patten.split(' ')
+            args = pattern.split(' ')
             if args[0] == 'r':
                 cmd.extend(args[1:])
             else:
-                cmd.extend(['-b', '\\'+patten])
+                cmd.extend(['-b', '\\'+pattern])
             print('----->'+str(cmd))
             output = subprocess.check_output(cmd)
             return output.splitlines()
