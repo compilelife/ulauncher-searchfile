@@ -6,7 +6,7 @@
     "developer_name": "compilelife",
     "icon": "images/icon.png",
     "options": {
-      "query_debounce": 1.0
+      "query_debounce": 0.5
     },
     "preferences": [
       {
