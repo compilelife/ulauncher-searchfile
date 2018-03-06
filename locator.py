@@ -28,7 +28,7 @@ class Locator:
             if args[0] == 'r':
                 cmd.extend(args[1:])
             else:
-                cmd.extend(['-b', '\\'+pattern])
+                cmd.extend(['-iA', pattern])
             print('----->'+str(cmd))
             output = subprocess.check_output(cmd)
             return output.splitlines()
