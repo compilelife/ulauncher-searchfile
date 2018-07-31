@@ -4,7 +4,7 @@ This repository will not be maintain anymore!
 
 Instead of wasting time waiting searching command to complete, I chose organising my files orderly. Another good practise may be using your powerfull 'Recent files'.
 
-For files that beeb used few, 'find' command would be good. And for me, terminal + locate would work too.
+For files that only used few times, 'find' command would be good. And for me, terminal + locate would work too.
 
 **Old ReadMe**
 
